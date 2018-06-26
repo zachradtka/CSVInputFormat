@@ -157,12 +157,10 @@ public class CSVNLineInputFormat extends FileInputFormat<LongWritable, List<Text
    * @see FileInputFormat#getSplits(JobContext)
    */
   public List<InputSplit> getSplits(JobContext job) throws IOException {
-    List<InputSplit> splits = new ArrayList<InputSplit>();
+    List<InputSplit> splits = new ArrayList<>();
     int numLinesPerSplit = getNumLinesPerSplit(job);
     for (FileStatus status : listStatus(job)) {
-      List<FileSplit> fileSplits = getSplitsForFile(status, job.getConfiguration(),
-          numLinesPerSplit);
-      splits.addAll(fileSplits);
+      splits.addAll(getSplitsForFile(status, job.getConfiguration(), numLinesPerSplit));
     }
     return splits;
   }
